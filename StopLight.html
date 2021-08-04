@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+<meta content="utf-8" http-equiv="encoding">
+  </head>
+<body>
+
+<div id="trafficLight">
+
+
+<button onclick="AutoMode(true)">Automatic mode</button>
+<br><br>
+<button onclick="AutoMode(false);ChangeToRed()">Stop</button>
+<button onclick="AutoMode(false);ChangeToYellow()">Caution</button>
+<button onclick="AutoMode(false);ChangeToGreen()">Go</button>
+</div>
+
+<style>
+
+}
+</style>
+<script>
+
+
+//creates the body of the traffic light
+var TrafficLight = document.createElement("DIV")
+TrafficLight.style.background = "black";
+TrafficLight.style.height = "300px";
+TrafficLight.style.width = "100px";
+TrafficLight.style.margin = "auto";
+TrafficLight.style.padding = "20px";
+TrafficLight.style.zIndex = "-2"
+TrafficLight.id = "trafficlightbody"
+document.getElementById("trafficLight").appendChild(TrafficLight);
+
+function CreateBulb(id){//creates the lightbulbs for the traffic light
+  var LightBulb = document.createElement("DIV");
+  //light bulb properties
+  LightBulb.style.borderRadius = "50%"
+  LightBulb.style.background = "grey";
+  LightBulb.style.height = "30px";
+  LightBulb.style.width = "30px";
+  LightBulb.style.padding = "20px";
+  LightBulb.style.margin = "auto"
+  LightBulb.style.marginBottom = "30px"
+
+  //sets the lightbulb id based on the 'id' parameter passed onto the function
+  LightBulb.id = id;
+  document.getElementById("trafficlightbody").appendChild(LightBulb);
+}
+
+CreateBulb('redlight')//creates a light bulb with the id 'redlight'
+CreateBulb('yellowlight');
+CreateBulb('greenlight');
+
+
+
+
+function ChangeToRed(){
+  document.getElementById("redlight").style.background = "red";
+  document.getElementById("yellowlight").style.background = "grey";
+  document.getElementById("greenlight").style.background = "grey";
+
+}
+function ChangeToYellow(){
+  document.getElementById("redlight").style.background = "grey";
+  document.getElementById("yellowlight").style.background = "yellow";
+  document.getElementById("greenlight").style.background = "grey";
+
+}
+function ChangeToGreen(){
+  document.getElementById("redlight").style.background = "grey";
+  document.getElementById("yellowlight").style.background = "grey";
+  document.getElementById("greenlight").style.background = "green";
+
+}
+//Declares the variables to be used by Automode function
+var AutoChanger;
+var SetToRed;
+var SetToGreen;
+var SetToYellow;
+
+function AutoMode(OnorOff){
+
+  if (OnorOff==true) {
+    ChangeToRed();//initially sets the traffic light to red
+
+    //sets a cycle that repeats every 5 seconds
+    AutoChanger = setInterval(function(){
+      SetToGreen = setTimeout(ChangeToGreen,1000);
+      SetToYellow = setTimeout(ChangeToYellow,3000);
+      SetToRed = setTimeout(ChangeToRed,4000);
+    },5000)
+  }
+  else if (OnorOff==false) {//Turns off the automatic mode
+    window.clearInterval(AutoChanger);
+    //Prevents changing of lights after automatic mode is turned off
+    clearTimeout(SetToGreen);
+    clearTimeout(SetToYellow);
+    clearTimeout(SetToRed);
+  }
+}
+
+
+</script>
+
+</body>
+</html>
