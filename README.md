@@ -1,2 +1,2 @@
-# hello-world
-My First Repo 
+# Traffic Light
+Sample JavaScript program
